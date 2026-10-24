@@ -116,12 +116,12 @@ dashboard；页面和设备仍保留全名。所有 surface 只在 CRYSTAL 已�
 磨豆机把皮肤唯一的 header 槽让给已连接的磨豆机，其页面仍可从 Decaid 设备管理打开。
 
 两个按钮以 fitted `overlay` 打开 settings-only 视图，而不是同 frame 的 `page`：
-窗口按可编辑卡片（配置（每行带发送按钮）、启动方式和 Start/Stop）调整大小，只读的读数、特征表
+窗口按可编辑卡片（配置（每行带发送按钮）、启动方式和 Start/Stop）调整大小，特征表
 和日志不绘制；关闭后回到原样的 dashboard，不跳转也不重载皮肤。页面在加载时发
 `streamline:ready`，用 `streamline:size` 上报内容尺寸，返回按钮发
 `streamline:close`；皮肤自己也会画关闭按钮。
 
-窗口里的 **Full / Compact** 切换会在皮肤允许的最大 overlay 尺寸下显示只读卡片；
+窗口里的 **Full / Compact** 切换会在皮肤允许的最大 overlay 尺寸下显示特征表和日志；
 Compact 回到 fitted 卡片。真正的边到边 `size:"full"` overlay 在皮肤打开页面时就
 固定了，所以 Full 使用 overlay 能请求的最大尺寸。如果皮肤退回成 page，或者页面从
 Decaid 设备管理打开，返回按钮会使用 surface 协议的 `returnTo`。
@@ -143,13 +143,13 @@ GET  /api/v1/plugins/crystal.reaplugin/ui?state=1    -> 缓存的 JSON 状态
 POST /api/v1/plugins/crystal.reaplugin/ui            -> {commandId, params}
 ```
 
-页面显示六个实时特征、当前位置和目标、本地配置（电机转速、下豆转速、研磨度、
-启动方式）；每行带发送按钮，另有 Start / Stop，以及读/写/通知日志。它支持中英文
-切换。轮询只读缓存值，不访问设备。
+页面显示本地配置（研磨度在最前，然后是电机转速、下豆转速，每行带发送按钮）、
+六个实时特征、Start / Stop 和读/写/通知日志。配置、特征和日志三列排列。它支持
+中英文切换。轮询只读缓存值，不访问设备。
 
-`?view=settings` 渲染 dashboard surface 使用的紧凑视图：只读读数、特征表和日志
-隐藏，只留配置（每行带发送按钮）和 Start/Stop。该视图里的 Full 切换会在皮肤允许的最大
-overlay 尺寸下显示只读卡片。设备管理里的 settings surface 打开完整页面。
+`?view=settings` 渲染 dashboard surface 使用的紧凑视图：特征表和日志隐藏，
+只留配置（每行带发送按钮）和 Start/Stop。该视图里的 Full 切换会在皮肤允许的最大
+overlay 尺寸下显示特征表和日志。设备管理里的 settings surface 打开完整页面。
 
 | 命令 | 用途 |
 | --- | --- |

@@ -3,7 +3,7 @@
   "name": "CRYSTAL Grinder",
   "author": "Decaid contributors",
   "description": "Opt-in CRYSTAL grinder protocol using host-owned BLE.",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "apiVersion": 1,
   "permissions": [
     "transport.ble",

@@ -280,7 +280,8 @@ void main() {
       "frame-ancestors 'self'",
     );
     final page = response['body'] as String;
-    expect(page, contains('id="servoAngle"'));
+    expect(page, contains('id="config-card"'));
+    expect(page, contains('id="table"'));
     expect(page, contains('class="send"'));
     expect(page, contains('class="app"'));
     expect(page, contains('id="back"'));

@@ -136,15 +136,14 @@ and its page stays reachable from Decaid's device management.
 
 The two buttons open a settings-only view in a fitted `overlay`, not as a
 same-frame `page`: the window is sized to the editable cards (configuration
-with a Send button on each row, start mode and Start/Stop), the read-only
-readout, characteristic table
-and log are not drawn, and closing it returns to the dashboard as it was left,
+with a Send button on each row, start mode and Start/Stop), the characteristic
+table and log are not drawn, and closing it returns to the dashboard as it was left,
 with no navigation and no skin reload. The page posts `streamline:ready` on
 load and `streamline:size` with its content size, and `streamline:close` from
 its back button; the skin draws its own close button too.
 
-A **Full / Compact** toggle in the window shows the read-only cards at the
-skin's maximum overlay size; Compact returns to the fitted card. A true
+A **Full / Compact** toggle in the window shows the characteristic table and
+log at the skin's maximum overlay size; Compact returns to the fitted card. A true
 edge-to-edge `size:"full"` overlay is fixed when the skin opens the page, so
 Full uses the largest size an overlay may request. If a skin falls back to a
 page open, or the page is opened from Decaid's device management, the back
@@ -169,18 +168,17 @@ GET  /api/v1/plugins/crystal.reaplugin/ui?state=1    -> cached JSON state
 POST /api/v1/plugins/crystal.reaplugin/ui            -> {commandId, params}
 ```
 
-It shows the six live characteristics, the current position and target, the
-local configuration (motor RPM, feed RPM, grind size, start mode) with a Send
-button on each row, Start / Stop, and a read/write/notify log. It toggles
-between English and Chinese. Polling reads the cached values and never touches
-the device.
+It shows the local configuration (grind size first, then motor RPM and feed
+RPM, with a Send button on each row), the six live characteristics, Start /
+Stop, and a read/write/notify log. The configuration, characteristics and log
+cards sit in three columns. It toggles between English and Chinese. Polling
+reads the cached values and never touches the device.
 
 `?view=settings` renders the compact view the dashboard surfaces use: the
-read-only readout, characteristic table and log are hidden, leaving the
-configuration (with per-row Send) and Start/Stop. The Full toggle in that view
-shows the
-read-only cards at the skin's maximum overlay size. The device-management
-settings surface opens the full page.
+characteristic table and log are hidden, leaving the configuration (with
+per-row Send) and Start/Stop. The Full toggle in that view shows the
+characteristic table and log at the skin's maximum overlay size. The
+device-management settings surface opens the full page.
 
 | Command | Purpose |
 | --- | --- |
