@@ -8,6 +8,12 @@ surface。
 
 无需 Decaid 发版即可使用；添加其他设备也不需要 Decaid 发版。
 
+## 截图
+
+![Compact 设置视图（英文）](https://github.com/Sofronio/decaid-crystal-grinder/releases/download/v0.2.5/crystal-compact-en-20261024-115606.png)
+
+![Full 设置视图（英文）](https://github.com/Sofronio/decaid-crystal-grinder/releases/download/v0.2.5/crystal-full-en-20261024-115204.png)
+
 ## 驱动类型
 
 CRYSTAL 声明 `grinder` 驱动类型。能力为 `startStop`、`grindSetting` 和

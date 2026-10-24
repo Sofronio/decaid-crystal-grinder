@@ -9,6 +9,12 @@ BLE connection lifecycle, and the grinder surface.
 No Decaid release is needed to use this, and none is needed to add support for
 another device.
 
+## Screenshots
+
+![Compact settings view (English)](https://github.com/Sofronio/decaid-crystal-grinder/releases/download/v0.2.5/crystal-compact-en-20261024-115606.png)
+
+![Full settings view (English)](https://github.com/Sofronio/decaid-crystal-grinder/releases/download/v0.2.5/crystal-full-en-20261024-115204.png)
+
 ## Driver type
 
 The CRYSTAL declares the `grinder` driver type. It claims `startStop`,
