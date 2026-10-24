@@ -281,7 +281,7 @@ void main() {
     );
     final page = response['body'] as String;
     expect(page, contains('id="servoAngle"'));
-    expect(page, contains('id="apply"'));
+    expect(page, contains('class="send"'));
     expect(page, contains('class="app"'));
     expect(page, contains('id="back"'));
     expect(page, contains('id="expand"'));

@@ -135,8 +135,9 @@ grinder leaves the skin's single header slot to the grinder that is connected,
 and its page stays reachable from Decaid's device management.
 
 The two buttons open a settings-only view in a fitted `overlay`, not as a
-same-frame `page`: the window is sized to the editable cards (configuration,
-start mode and Apply/Start/Stop), the read-only readout, characteristic table
+same-frame `page`: the window is sized to the editable cards (configuration
+with a Send button on each row, start mode and Start/Stop), the read-only
+readout, characteristic table
 and log are not drawn, and closing it returns to the dashboard as it was left,
 with no navigation and no skin reload. The page posts `streamline:ready` on
 load and `streamline:size` with its content size, and `streamline:close` from
@@ -169,13 +170,15 @@ POST /api/v1/plugins/crystal.reaplugin/ui            -> {commandId, params}
 ```
 
 It shows the six live characteristics, the current position and target, the
-local configuration (motor RPM, feed RPM, grind size, start mode), Apply /
-Start / Stop, and a read/write/notify log. It toggles between English and
-Chinese. Polling reads the cached values and never touches the device.
+local configuration (motor RPM, feed RPM, grind size, start mode) with a Send
+button on each row, Start / Stop, and a read/write/notify log. It toggles
+between English and Chinese. Polling reads the cached values and never touches
+the device.
 
 `?view=settings` renders the compact view the dashboard surfaces use: the
 read-only readout, characteristic table and log are hidden, leaving the
-configuration and Apply/Start/Stop. The Full toggle in that view shows the
+configuration (with per-row Send) and Start/Stop. The Full toggle in that view
+shows the
 read-only cards at the skin's maximum overlay size. The device-management
 settings surface opens the full page.
 
@@ -185,10 +188,10 @@ settings surface opens the full page.
 | `getConfig` | Return the local configuration |
 | `readAll` | Re-read every characteristic from the device |
 | `setConfig` | Change local configuration only (saved, not sent) |
-| `setAndApply` | Save the grind size, then apply it and wait for `SYS_STATE` |
+| `setAndApply` | Set the grind size, write the target and apply it, waiting for `SYS_STATE` |
 | `start` | Send the configuration, apply the grind, wait 1500 ms, then start |
 | `stop` | Send `bootSign = 4` and wait for `SYS_STATE` to return to 0 |
-| `writeMotorRpm`, `writeFeedRpm`, `writeBootSign`, `writeTargetAngle` | Direct characteristic writes for diagnostics |
+| `writeMotorRpm`, `writeFeedRpm`, `writeBootSign`, `writeTargetAngle` | Direct characteristic writes (used by the per-row Send buttons) |
 
 The grinder contract itself is exposed through `PUT /api/v1/grinder/setting`,
 `PUT /api/v1/grinder/rpm`, and the grinder start/stop controls.
