@@ -1,5 +1,7 @@
 # CRYSTAL Grinder for Decaid
 
+[简体中文](https://github.com/Sofronio/decaid-crystal-grinder/blob/main/README.zh-CN.md) | **English**
+
 A [Decaid](https://github.com/decentespresso/decaid) plugin that adds the
 CRYSTAL grinder. The plugin owns the device protocol; Decaid owns discovery, the
 BLE connection lifecycle, and the grinder surface.
