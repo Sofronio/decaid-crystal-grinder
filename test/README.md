@@ -31,10 +31,15 @@ tests load.
 
 ## What the fixture covers
 
-`crystal_plugin_fixture.dart` models the device as five independent
-characteristics carrying one UInt16 each, with no framing or checksum layer. It
-encodes big-endian, so the documented `0x01 0xF3` for 499 is what the tests
+`crystal_plugin_fixture.dart` models the device as six independent
+characteristics with no framing or checksum layer. The measured channels carry a
+UInt16 big-endian, so the documented `0x01 0xF3` for 499 is what the tests
 assert — a switch to little-endian would decode that as 62209 and fail here
-rather than only against hardware. Writes land in the device's value the way a
-later read would observe them, and `notify` pushes a change the way the firmware
-does.
+rather than only against hardware. `SYS_STATE` is one byte in the fixture, which
+exercises the driver's tolerance for both widths. Writes land in the device's
+value the way a later read would observe them, and `notify` pushes a change the
+way the firmware does.
+
+The tests also cover the grinder contract: the snapshot and 0-readback guard,
+the `SYS_STATE` 0→1→0 sequence around an apply, the forced 1500 ms wait before
+start, the local configuration, the surfaces, and the overlay/CSP page headers.

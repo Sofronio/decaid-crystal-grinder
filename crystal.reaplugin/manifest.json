@@ -3,30 +3,108 @@
   "name": "CRYSTAL Grinder",
   "author": "Decaid contributors",
   "description": "Opt-in CRYSTAL grinder protocol using host-owned BLE.",
-  "version": "0.1.1",
+  "version": "0.2.3",
   "apiVersion": 1,
   "permissions": [
     "transport.ble",
-    "api"
+    "api",
+    "emit",
+    "pluginStorage"
   ],
   "drivers": [
     {
       "id": "crystal",
-      "type": "sensor",
+      "type": "grinder",
+      "capabilities": [
+        "startStop",
+        "grindSetting",
+        "rpmControl"
+      ],
+      "observations": [
+        "setting",
+        "rpm"
+      ],
       "ble": {
         "match": {
           "name": {
             "contains": "crystal"
           }
         }
-      }
+      },
+      "controls": {
+        "grindSetting": {
+          "kind": "numeric",
+          "min": 0,
+          "max": 1500,
+          "step": 1
+        },
+        "rpmControl": {
+          "kind": "numeric",
+          "min": 0,
+          "max": 1500,
+          "step": 10
+        }
+      },
+      "surfaces": [
+        {
+          "id": "settings",
+          "role": "settings",
+          "endpoint": "ui",
+          "label": "CRYSTAL controls"
+        }
+      ]
     }
   ],
-  "settings": {},
+  "settings": {
+    "motorRpm": {
+      "type": "number",
+      "label": "Motor RPM",
+      "description": "Burr speed sent to the grinder when grinding starts.",
+      "default": 850
+    },
+    "feedRpm": {
+      "type": "number",
+      "label": "Feed RPM",
+      "description": "Bean feed speed sent to the grinder when grinding starts (0-150).",
+      "default": 20
+    },
+    "grindSize": {
+      "type": "number",
+      "label": "Grind size",
+      "description": "Target grind size (0-1500) sent when a grind is applied.",
+      "default": 500
+    },
+    "bootMode": {
+      "type": "enum",
+      "label": "Start mode",
+      "description": "Start command sent after the grind size is applied.",
+      "values": [
+        "manual",
+        "timed",
+        "smart"
+      ],
+      "default": "smart"
+    }
+  },
   "api": [
     {
       "id": "ui",
       "type": "http",
+      "data": {}
+    },
+    {
+      "id": "skin",
+      "type": "http",
+      "data": {}
+    },
+    {
+      "id": "rpm",
+      "type": "http",
+      "data": {}
+    },
+    {
+      "id": "changed",
+      "type": "websocket",
       "data": {}
     }
   ]

@@ -11,12 +11,13 @@ import 'plugin_ble_fixture.dart';
 const crystalPluginPath = 'examples/plugins/crystal.reaplugin';
 const crystalServiceUuid = '7fa2d10c-12f3-4b9e-9d77-1a9b65432100';
 
-/// The five characteristics are the service UUID with its last two digits
+/// The six characteristics are the service UUID with its last two digits
 /// replaced by the channel number.
 const crystalChannelUuids = <String, String>{
   'motorRpm': '7fa2d10c-12f3-4b9e-9d77-1a9b65432101',
   'feedRpm': '7fa2d10c-12f3-4b9e-9d77-1a9b65432102',
   'bootSign': '7fa2d10c-12f3-4b9e-9d77-1a9b65432103',
+  'sysState': '7fa2d10c-12f3-4b9e-9d77-1a9b65432104',
   'servoAngle': '7fa2d10c-12f3-4b9e-9d77-1a9b65432105',
   'targetAngle': '7fa2d10c-12f3-4b9e-9d77-1a9b65432106',
 };
@@ -25,6 +26,7 @@ const crystalChannelOrder = [
   'motorRpm',
   'feedRpm',
   'bootSign',
+  'sysState',
   'servoAngle',
   'targetAngle',
 ];
@@ -33,16 +35,23 @@ PluginManifest crystalManifest() => PluginManifest.fromJson(
   jsonDecode(File('$crystalPluginPath/manifest.json').readAsStringSync()),
 );
 
-Future<void> loadCrystalPlugin(PluginManager manager) => manager.loadPlugin(
+Future<void> loadCrystalPlugin(
+  PluginManager manager, {
+  Map<String, dynamic> settings = const {},
+}) => manager.loadPlugin(
   id: crystalManifest().id,
   manifest: crystalManifest(),
-  settings: {},
+  settings: settings,
   jsCode: File('$crystalPluginPath/plugin.js').readAsStringSync(),
 );
 
-/// Every CRYSTAL value is a UInt16, big-endian, exactly two bytes. The physical
-/// unit reads 499 as `0x01 0xF3`; little-endian would decode it as 62209.
+/// Every measured CRYSTAL value is a UInt16, big-endian, exactly two bytes. The
+/// physical unit reads 499 as `0x01 0xF3`; little-endian would decode it as
+/// 62209. SYS_STATE is documented as one byte, and the plugin accepts both.
 List<int> crystalBytes(int value) => [(value >> 8) & 0xFF, value & 0xFF];
+
+List<int> crystalChannelBytes(String key, int value) =>
+    key == 'sysState' ? [value & 0xFF] : crystalBytes(value);
 
 class CrystalPluginTransport extends PluginBleFixtureTransport {
   CrystalPluginTransport(super.physicalId, {Map<String, int>? initial})
@@ -77,7 +86,10 @@ class CrystalPluginTransport extends PluginBleFixtureTransport {
     if (value == null) {
       throw StateError('Unexpected CRYSTAL read $characteristicUUID');
     }
-    return Uint8List.fromList(crystalBytes(value));
+    final key = crystalChannelUuids.entries
+        .firstWhere((entry) => entry.value == characteristicUUID)
+        .key;
+    return Uint8List.fromList(crystalChannelBytes(key, value));
   }
 
   @override
@@ -114,6 +126,9 @@ class CrystalPluginTransport extends PluginBleFixtureTransport {
     if (!crystalChannelUuids.containsValue(characteristicUUID)) {
       throw StateError('Unexpected CRYSTAL write $characteristicUUID');
     }
+    if (characteristicUUID == crystalChannelUuids['sysState']) {
+      throw StateError('SYS_STATE is read-only');
+    }
     if (data.length != 2) {
       throw StateError(
         'CRYSTAL writes are exactly two bytes, got ${data.length}',
@@ -138,7 +153,7 @@ class CrystalPluginTransport extends PluginBleFixtureTransport {
     if (callback == null) {
       throw StateError('CRYSTAL channel $key is not subscribed');
     }
-    callback(Uint8List.fromList(crystalBytes(value)));
+    callback(Uint8List.fromList(crystalChannelBytes(key, value)));
   }
 
   /// The bytes written to a channel, in order.
