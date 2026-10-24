@@ -36,7 +36,8 @@ curl -X POST http://localhost:8080/api/v1/plugins/install/github-release \
   -d '{"repo": "Sofronio/decaid-crystal-grinder"}'
 ```
 
-Or open the Plugins settings screen in Decaid and install from the repository.
+Or open the Plugins settings screen in Decaid and enter
+`Sofronio/decaid-crystal-grinder` directly.
 
 The public device ID is `plugin:crystal.reaplugin:crystal:<physical id>`. When
 the plugin is loaded it takes ownership of the advertisement.

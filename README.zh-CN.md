@@ -33,7 +33,8 @@ curl -X POST http://localhost:8080/api/v1/plugins/install/github-release \
   -d '{"repo": "Sofronio/decaid-crystal-grinder"}'
 ```
 
-也可以在 Decaid 的 Plugins 设置页从仓库安装。
+也可以在 Decaid 的 Plugins 设置页从仓库安装，直接填
+`Sofronio/decaid-crystal-grinder` 即可。
 
 公共设备 ID 是 `plugin:crystal.reaplugin:crystal:<physical id>`。插件加载后会
 接管该广播。
