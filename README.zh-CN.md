@@ -10,9 +10,9 @@ surface。
 
 ## 截图
 
-![Compact 设置视图（英文）](https://github.com/Sofronio/decaid-crystal-grinder/releases/download/v0.2.5/crystal-compact-en-20261024-115606.png)
+![Compact 设置视图（中文）](https://github.com/Sofronio/decaid-crystal-grinder/releases/download/v0.2.5/crystal-compact-zh-20261024-115912.png)
 
-![Full 设置视图（英文）](https://github.com/Sofronio/decaid-crystal-grinder/releases/download/v0.2.5/crystal-full-en-20261024-115204.png)
+![Full 设置视图（中文）](https://github.com/Sofronio/decaid-crystal-grinder/releases/download/v0.2.5/crystal-full-zh-20261024-115917.png)
 
 ## 驱动类型
 
