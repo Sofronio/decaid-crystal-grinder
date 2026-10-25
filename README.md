@@ -141,6 +141,10 @@ All surfaces are declared only while the CRYSTAL is connected: a disconnected
 grinder leaves the skin's single header slot to the grinder that is connected,
 and its page stays reachable from Decaid's device management.
 
+Declaring the two buttons is also a preference: the `showButtons` plugin
+setting, on by default, turns both off and leaves the Grind tile surfaces
+alone.
+
 The two buttons open a settings-only view in a fitted `overlay`, not as a
 same-frame `page`: the window is sized to the editable cards (configuration
 with a Send button on each row, start mode and Start/Stop), the characteristic

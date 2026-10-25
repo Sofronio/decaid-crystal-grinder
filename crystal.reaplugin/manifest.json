@@ -3,7 +3,7 @@
   "name": "CRYSTAL Grinder",
   "author": "Decaid contributors",
   "description": "Opt-in CRYSTAL grinder protocol using host-owned BLE.",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "apiVersion": 1,
   "permissions": [
     "transport.ble",
@@ -84,6 +84,12 @@
         "smart"
       ],
       "default": "smart"
+    },
+    "showButtons": {
+      "type": "boolean",
+      "label": "Streamline buttons",
+      "description": "Show the XTAL button in Streamline's header and on the screensaver. Turn off to leave the skin's single header slot free; the Grind tile surfaces still appear.",
+      "default": true
     }
   },
   "api": [

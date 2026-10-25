@@ -122,6 +122,9 @@ apply。只有这时才会出现 `tile-sync`。`observedSetting` 仍然带着原
 dashboard；页面和设备仍保留全名。所有 surface 只在 CRYSTAL 已连接时声明：断开的
 磨豆机把皮肤唯一的 header 槽让给已连接的磨豆机，其页面仍可从 Decaid 设备管理打开。
 
+这两个按钮也可以由用户关掉：`showButtons` 插件设置（默认开启）会同时隐藏它们，
+Grind tile 上的 surface 不受影响。
+
 两个按钮以 fitted `overlay` 打开 settings-only 视图，而不是同 frame 的 `page`：
 窗口按可编辑卡片（配置（每行带发送按钮）、启动方式和 Start/Stop）调整大小，特征表
 和日志不绘制；关闭后回到原样的 dashboard，不跳转也不重载皮肤。页面在加载时发

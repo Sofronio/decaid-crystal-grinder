@@ -338,12 +338,16 @@ function createPlugin(host) {
   }
 
   let deviceHandler = null;
+  let showButtons = true;
 
   return {
     id: "crystal.reaplugin",
     onLoad(settings) {
       config = normalizeConfig(settings);
       settingsFingerprint = JSON.stringify(config);
+      // A skin has one header slot, and the user may rather leave it to
+      // another grinder. Settings are read when the plugin loads.
+      showButtons = !settings || settings.showButtons !== false;
       try {
         host.storage({ type: "read", key: storageKey, namespace: namespace });
       } catch (error) {
@@ -913,20 +917,22 @@ function createPlugin(host) {
             presentation: "overlay",
             fit: true,
           };
-          surfaces.push(
-            {
-              id: "crystal-page",
-              kind: "header-button",
-              label: "XTAL",
-              action: pageAction,
-            },
-            {
-              id: "crystal-saver",
-              kind: "screensaver-button",
-              label: "XTAL",
-              action: pageAction,
-            }
-          );
+          if (showButtons) {
+            surfaces.push(
+              {
+                id: "crystal-page",
+                kind: "header-button",
+                label: "XTAL",
+                action: pageAction,
+              },
+              {
+                id: "crystal-saver",
+                kind: "screensaver-button",
+                label: "XTAL",
+                action: pageAction,
+              }
+            );
+          }
           surfaces.push({
             id: "crystal-state",
             kind: "tile-line",

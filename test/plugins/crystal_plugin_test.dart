@@ -114,6 +114,13 @@ void main() {
     expect(driver.ble!.nameValue, 'crystal');
   });
 
+  test('CRYSTAL manifest exposes the Streamline button setting', () {
+    final setting =
+        crystalManifest().settings['showButtons'] as Map<String, dynamic>;
+    expect(setting['type'], 'boolean');
+    expect(setting['default'], true);
+  });
+
   test('CRYSTAL advertisement without the name is not claimed', () async {
     final manager = PluginManager(kvStore: FakeKeyValueStoreService());
     addTearDown(manager.dispose);
@@ -369,6 +376,31 @@ void main() {
     });
     expect(surfaceOf(surfaces, 'tile-sync')['value'], 650);
     expect(surfaceOf(surfaces, 'tile-sync')['label'], 'XTAL');
+    await grinder.disconnect();
+  });
+
+  test('CRYSTAL skin hides its Streamline buttons when asked', () async {
+    final manager = PluginManager(kvStore: FakeKeyValueStoreService());
+    addTearDown(manager.dispose);
+    await loadCrystalPlugin(manager, settings: const {'showButtons': false});
+    final transport = CrystalPluginTransport(
+      'AA:BB',
+      initial: {'servoAngle': 650},
+    );
+    final grinder = await connectCrystal(manager, transport);
+    final surfaces = await skinSurfaces(manager);
+    expect(
+      surfaces.where(
+        (surface) =>
+            surface['kind'] == 'header-button' ||
+            surface['kind'] == 'screensaver-button',
+      ),
+      isEmpty,
+    );
+    // The setting only covers the buttons; the Grind tile surfaces stay.
+    expect(surfaceOf(surfaces, 'tile-line')['tile'], 'grind');
+    expect(surfaceOf(surfaces, 'tile-hint')['tile'], 'grind');
+    expect(surfaceOf(surfaces, 'tile-sync')['value'], 650);
     await grinder.disconnect();
   });
 }
